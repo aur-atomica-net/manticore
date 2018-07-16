@@ -21,9 +21,9 @@ source=(
     'manticore.install'
     'sphinx.service')
 sha256sums=('e2fc80ca358ba6b08431c8d04a712cd4c8db7eecc9668d95b312235fba308193'
-            '72577373e5256f887d039200c994f7dba72cd11875c29243c0ad5cd190813851'
-            '5588a5a1699e78573e8a8e43f4844e07b8b87f3de77e01a683716219f8911e01'
-            '4ea38f530de4a892a027248972b8aeb5c810d90f4e86dea306a58df692838e15')
+            'SKIP'
+            'SKIP'
+            'SKIP')
 
 build() {
   cd "${srcdir}"
