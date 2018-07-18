@@ -1,12 +1,12 @@
 post_install() {
   groupadd --system sphinx &>/dev/null
-  useradd --system -g sphinx -s /bin/false sphinx &>/dev/null
+  useradd --system --gid sphinx --shell /bin/false --home-dir /var/lib/sphinx sphinx &>/dev/null
   chown -R sphinx:sphinx /var/{lib,log}/sphinx /var/run/sphinx
 }
 
 post_upgrade(){
   getent group sphinx >/dev/null 2>&1 || groupadd --system sphinx &>/dev/null
-  getent passwd sphinx >/dev/null 2>&1 || useradd --system -s /bin/false -g sphinx -s /bin/false sphinx &>/dev/null
+  getent passwd sphinx >/dev/null 2>&1 || useradd --system --gid sphinx --shell /bin/false --home-dir /var/lib/sphinx sphinx &>/dev/null
 }
 
 post_remove() {
