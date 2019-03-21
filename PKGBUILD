@@ -1,4 +1,4 @@
-# Maintainer: Jason R. McNeil <jason@jasonrm.net>
+# Maintainer: Jason R. McNeil <arch@jason.mcneil.dev>
 
 pkgname='manticore'
 pkgver=2.8.1
