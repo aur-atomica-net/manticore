@@ -1,8 +1,8 @@
 # Maintainer: Jason R. McNeil <arch@jason.mcneil.dev>
 
 pkgname='manticore'
-pkgver=2.8.1
-_release_archive='manticore-2.8.1-190306-3684198-release.tar.gz'
+pkgver=3.3.0
+_release_archive='manticore-3.3.0-200204-01fc8ad-release.tar.gz'
 pkgrel=1
 pkgdesc='High performance full-text search engine with SQL and JSON support'
 arch=('x86_64')
@@ -20,7 +20,7 @@ source=(
     'sphinx.conf.d'
     'manticore.install'
     'sphinx.service')
-sha256sums=('d0ae4bc106ec223a6c30eec6255e54e93824e2191215a20fd6a5da40359fe3b1'
+sha256sums=('f62801f6eb50bd08cb8fe976f0a3a43c7600b979a1ced8d14b8261ca06eaf22c'
             'SKIP'
             'SKIP'
             'SKIP')
