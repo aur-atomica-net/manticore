@@ -12,7 +12,7 @@ backup=('etc/conf.d/sphinx')
 conflicts=('sphinx' 'sphinx-bin')
 provides=('sphinx')
 install='manticore.install'
-makedepends=('cmake' 'mariadb-clients' 'postgresql-libs' 'git' 'python2')
+makedepends=('cmake' 'mariadb-clients' 'postgresql-libs' 'git' 'python2' 'boost')
 optdepends=('mariadb-clients: MySQL data source support'
   'postgresql-libs: PostgreSQL data source support')
 source=(
@@ -20,23 +20,27 @@ source=(
     'sphinx.conf.d'
     'manticore.install'
     'sphinx.service')
+noextract=("${_release_archive}")
 sha256sums=('f62801f6eb50bd08cb8fe976f0a3a43c7600b979a1ced8d14b8261ca06eaf22c'
             'SKIP'
             'SKIP'
             'SKIP')
 
+prepare() {
+  mkdir -p "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}"
+  tar --strip-components 1 -xf "${srcdir}/${_release_archive}"
+}
+
 build() {
-  cd "${srcdir}"
-
-  mkdir -p "${srcdir}/build"
-  cd build
-
-  cmake -D WITH_MYSQL=1 WITH_PGSQL=1 "${srcdir}/${_release_archive%.tar.gz}"
+  mkdir -p "${srcdir}/${pkgname}/build"
+  cd "${srcdir}/${pkgname}/build"
+  cmake -DUSE_GALERA=0 -DWITH_MYSQL=1 -DWITH_PGSQL=1 "${srcdir}/${pkgname}"
   make
 }
 
 package() {
-  cd "${srcdir}/${_release_archive%.tar.gz}"
+  cd "${srcdir}/${pkgname}/build"
 
   # create directories
   install -d "$pkgdir"/usr/bin
@@ -46,20 +50,18 @@ package() {
   install -d "$pkgdir"/var/log/sphinx
   install -d "$pkgdir"/run/sphinx
 
-  mv sphinx.conf.in "${pkgdir}"/etc/sphinx/sphinx.conf
-  mv sphinx-min.conf.in "${pkgdir}"/etc/sphinx/sphinx-min.conf
+  mv manticore.conf "${pkgdir}"/etc/sphinx/manticore.conf
+  mv manticore-min.conf.dist "${pkgdir}"/etc/sphinx/manticore-min.conf
 
   mv api "${pkgdir}"/usr/share/sphinx/lib/api
-  mv doc "${pkgdir}"/usr/share/sphinx/lib/doc
-
-  cd "${srcdir}/build/src/"
 
   # create links
-  install -Dm755 "indexer" "${pkgdir}/usr/bin/indexer"
-  install -Dm755 "indextool" "${pkgdir}/usr/bin/indextool"
-  install -Dm755 "searchd" "${pkgdir}/usr/bin/searchd"
-  install -Dm755 "spelldump" "${pkgdir}/usr/bin/spelldump"
-  install -Dm755 "wordbreaker" "${pkgdir}/usr/bin/wordbreaker"
+  install -Dm755 "src/index_converter" "${pkgdir}/usr/bin/index_converter"
+  install -Dm755 "src/indexer" "${pkgdir}/usr/bin/indexer"
+  install -Dm755 "src/indextool" "${pkgdir}/usr/bin/indextool"
+  install -Dm755 "src/searchd" "${pkgdir}/usr/bin/searchd"
+  install -Dm755 "src/spelldump" "${pkgdir}/usr/bin/spelldump"
+  install -Dm755 "src/wordbreaker" "${pkgdir}/usr/bin/wordbreaker"
 
   # create service
   install -Dm644 "${srcdir}/sphinx.conf.d" "${pkgdir}/etc/conf.d/sphinx"
