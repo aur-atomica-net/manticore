@@ -1,8 +1,8 @@
 # Maintainer: Jason R. McNeil <arch@jason.mcneil.dev>
 
 pkgname='manticore'
-pkgver=3.3.0
-_release_archive='manticore-3.3.0-200204-01fc8ad-release.tar.gz'
+pkgver=3.5.0
+_release_archive='manticore-3.5.0-200722-1d34c49-release-source.tar.gz'
 pkgrel=1
 pkgdesc='High performance full-text search engine with SQL and JSON support'
 arch=('x86_64')
@@ -16,12 +16,12 @@ makedepends=('cmake' 'mariadb-clients' 'postgresql-libs' 'git' 'python2' 'boost'
 optdepends=('mariadb-clients: MySQL data source support'
   'postgresql-libs: PostgreSQL data source support')
 source=(
-    "https://github.com/manticoresoftware/manticoresearch/releases/download/${pkgver}/${_release_archive}"
+    "https://repo.manticoresearch.com/repository/manticoresearch_source/release/${_release_archive}"
     'sphinx.conf.d'
     'manticore.install'
     'sphinx.service')
 noextract=("${_release_archive}")
-sha256sums=('f62801f6eb50bd08cb8fe976f0a3a43c7600b979a1ced8d14b8261ca06eaf22c'
+sha256sums=('00d65103d7f07d52b953731566c1015d5f668dd35e8709eeca10cc0fbedb9a66'
             'SKIP'
             'SKIP'
             'SKIP')
