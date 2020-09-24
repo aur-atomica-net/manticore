@@ -51,7 +51,6 @@ package() {
   install -d "$pkgdir"/run/sphinx
 
   mv manticore.conf "${pkgdir}"/etc/sphinx/manticore.conf
-  mv manticore-min.conf.dist "${pkgdir}"/etc/sphinx/manticore-min.conf
 
   mv api "${pkgdir}"/usr/share/sphinx/lib/api
 
